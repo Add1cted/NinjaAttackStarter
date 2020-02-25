@@ -71,10 +71,11 @@ class GameScene: SKScene {
   // 1
   let player = SKSpriteNode(imageNamed: "player")
   var monstersDestroyed = 0
+  let label = UILabel()
     
   override func didMove(to view: SKView) {
     // 2
-    backgroundColor = SKColor.white
+    backgroundColor = SKColor.lightGray
     // 3
     player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
     // 4
@@ -103,7 +104,15 @@ class GameScene: SKScene {
   func addMonster() {
     
     // Create sprite
-    let monster = SKSpriteNode(imageNamed: "monster")
+    var monster = SKSpriteNode(imageNamed: "monster")
+    let numb = Int.random(in: 0..<2)
+    if numb==0 {
+      monster = SKSpriteNode(imageNamed: "monster")
+    }
+    else{
+      monster = SKSpriteNode(imageNamed: "monster2")
+    }
+    
     
     monster.physicsBody = SKPhysicsBody(rectangleOf: monster.size) // 1
     monster.physicsBody?.isDynamic = true // 2
@@ -180,6 +189,7 @@ class GameScene: SKScene {
     projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
   }
   
+
   func projectileDidCollideWithMonster(projectile: SKSpriteNode, monster: SKSpriteNode) {
     print("Hit")
     projectile.removeFromParent()
@@ -207,8 +217,9 @@ extension GameScene: SKPhysicsContactDelegate {
       if let monster = firstBody.node as? SKSpriteNode,
         let projectile = secondBody.node as? SKSpriteNode {
         projectileDidCollideWithMonster(projectile: projectile, monster: monster)
+        label.text = String(monstersDestroyed)
         monstersDestroyed += 1
-        if monstersDestroyed > 30 {
+        if monstersDestroyed > 40 {
           let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
           let gameOverScene = GameOverScene(size: self.size, won: true)
           view?.presentScene(gameOverScene, transition: reveal)

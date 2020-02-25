@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "asteroid-sprite-png-14-original.png",
+      "filename" : "Meteor_04.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "asteroid-sprite-png-14-original-1.png",
+      "filename" : "Meteor_04-1.png",
       "scale" : "2x"
     },
     {
